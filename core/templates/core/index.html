@@ -1,0 +1,91 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<!-- Categories -->
+<h5 class="mb-2 text-light">Browse categories</h5>
+<div class="category-row">
+  {% for c in categories %}
+    <a href="?category={{ c.slug }}" class="cat-pill">
+      {% if c.image %}
+        <img src="{{ c.image.url }}" alt="{{ c.name }}">
+      {% else %}
+        <span class="cat-letter">{{ c.name|slice:":1" }}</span>
+      {% endif %}
+      <div class="d-flex flex-column">
+        <span class="cat-name">{{ c.name }}</span>
+        <span class="cat-meta">Tap to explore</span>
+      </div>
+    </a>
+  {% endfor %}
+  <a href="/" class="cat-pill">
+    <span class="cat-letter">All</span>
+    <div class="d-flex flex-column">
+      <span class="cat-name">All items</span>
+      <span class="cat-meta">Show everything</span>
+    </div>
+  </a>
+</div>
+
+<!-- Products -->
+{% if products %}
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h5 class="mb-0 text-light">Top picks near you</h5>
+    <span class="text-muted small">{{ products|length }} items</span>
+  </div>
+
+  <div class="product-grid">
+    {% for p in products %}
+
+      <div class="product-card">
+
+        <!-- PURE CLICKABLE AREA (IMAGE + TEXT + PRICE) -->
+        <a href="{% url 'product_detail' p.pk %}" class="product-card-link">
+          <div class="product-thumb-wrap">
+            {% if p.image %}
+              <img src="{{ p.image.url }}" alt="{{ p.name }}">
+            {% else %}
+              <img src="https://via.placeholder.com/400x300" alt="{{ p.name }}">
+            {% endif %}
+          </div>
+
+          <div class="p-3 pb-2">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <div class="product-name">{{ p.name }}</div>
+            </div>
+
+            <div class="vendor-small mb-1">
+              {{ p.vendor.shop_name }}
+            </div>
+
+            <div class="product-price">₹{{ p.price }}</div>
+          </div>
+        </a>
+
+        <!-- ACTION AREA (ADD / LOGIN) – SAME HEIGHT FOR BOTH STATES -->
+        <div class="p-3 pt-2">
+          <form method="post"
+                action="{% url 'product_detail' p.pk %}"
+                class="m-0 product-actions">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" value="1">
+
+            {% if user.is_authenticated %}
+              <button class="btn-pill-accent" type="submit">Add</button>
+            {% else %}
+              <a href="{% url 'login' %}?next={% url 'product_detail' p.pk %}"
+                 class="btn-pill-login">
+                Login
+              </a>
+            {% endif %}
+          </form>
+        </div>
+
+      </div>
+
+    {% endfor %}
+  </div>
+{% else %}
+  <p class="text-muted mt-4">No products yet. Add via Admin or Vendor dashboard.</p>
+{% endif %}
+
+{% endblock %}

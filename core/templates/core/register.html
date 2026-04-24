@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<div class="auth-shell">
+  <div class="auth-card row g-0">
+    <div class="col-md-5 auth-side d-flex flex-column justify-content-between">
+      <div>
+        <div class="auth-tag">
+          <span>🛍️ Join the marketplace</span>
+        </div>
+        <h2 class="auth-title">Create your Instalocal account</h2>
+        <p class="auth-sub">
+          Register as a customer to order, or as a vendor to showcase your shop and receive orders from nearby customers.
+        </p>
+      </div>
+      <small>Vendors get a dedicated dashboard to manage products & orders.</small>
+    </div>
+
+    <div class="col-md-7 auth-main">
+      <h2>Sign up</h2>
+      <p class="mb-3">Choose your role and start using the app.</p>
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger py-2">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          {{ form.email }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          {{ form.password }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label d-block">Register as</label>
+          <div class="role-group">
+            {% for radio in form.role %}
+              <label class="role-pill">
+                {{ radio.tag }}
+                <span>{{ radio.choice_label }}</span>
+              </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Shop name (for vendors)</label>
+          {{ form.shop_name }}
+          <div class="form-text text-muted">Leave blank if you are a customer.</div>
+        </div>
+
+        <button class="btn btn-pill-accent w-100 mb-2" type="submit">Create account</button>
+
+        <div class="text-muted small mt-1">
+          Already have an account? <a href="{% url 'login' %}">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

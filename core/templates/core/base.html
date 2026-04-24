@@ -1,0 +1,102 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instalocal – Local Business Support</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+</head>
+<body class="app-body">
+
+  <!-- Top App Shell -->
+  <header class="app-header shadow-sm">
+    <div class="container d-flex align-items-center justify-content-between">
+      
+      <!-- Left Logo -->
+      <div class="d-flex align-items-center gap-2">
+        <div class="logo-pill">
+          <span>Lo</span>
+        </div>
+        <div class="d-flex flex-column">
+          <span class="app-title">Instalocal</span>
+          <span class="app-subtitle">Local essentials in minutes</span>
+        </div>
+      </div>
+
+      <!-- RIGHT NAV (UPDATED AS PER YOUR REQUIREMENT) -->
+      <nav class="d-none d-md-flex align-items-center gap-3 nav-links">
+        <a href="/" class="nav-link-top {% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a>
+        <a href="{% url 'cart' %}" class="nav-link-top">Cart</a>
+
+        {% if user.is_authenticated %}
+          <span class="nav-user-pill">Hi, {{ user.username }}</span>
+          <a href="{% url 'my_orders' %}" class="nav-link-top">My Orders</a>
+
+          {% if user.vendorprofile %}
+            <a href="{% url 'vendor_dashboard' %}" class="nav-link-top">Vendor</a>
+          {% endif %}
+
+          {% if user.is_staff %}
+            <a href="/admin/" class="nav-link-top">Admin</a>
+          {% endif %}
+
+          <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-light">Logout</a>
+
+        {% else %}
+          <a href="{% url 'login' %}" class="btn btn-sm btn-light">Login</a>
+          <a href="{% url 'register' %}" class="btn btn-sm btn-outline-light">Sign up</a>
+        {% endif %}
+      </nav>
+
+      <!-- MOBILE MENU -->
+      <div class="d-md-none d-flex align-items-center gap-2">
+        <a href="{% url 'cart' %}" class="nav-icon-pill">🛒</a>
+
+        {% if user.is_authenticated %}
+          {% if user.is_staff %}
+            <a href="/admin/" class="nav-icon-pill">⚙️</a>
+          {% endif %}
+          <a href="{% url 'logout' %}" class="nav-icon-pill">⎋</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="nav-icon-pill">⇥</a>
+        {% endif %}
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Search & Content -->
+  <main class="app-main">
+    <div class="container">
+
+      <!-- Search bar -->
+      <div class="search-shell mb-3">
+        <form method="get" action="/" class="search-bar">
+          <div class="input-group">
+            <span class="input-group-text search-icon">🔍</span>
+            <input name="q"
+                   class="form-control search-input"
+                   placeholder="Search for milk, bread, fruits..."
+                   value="{{ request.GET.q|default:'' }}">
+            <button class="btn btn-accent" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
+
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <footer class="app-footer text-center text-muted">
+    <small>Powered by Local Business Support App • {{ now|date:"Y" }}</small>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

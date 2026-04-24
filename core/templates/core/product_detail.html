@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="detail-wrapper card glass-card product-detail">
+  <div class="row g-4 align-items-center">
+
+    <div class="col-md-5">
+      <div class="detail-image-wrap">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" alt="{{ product.name }}" class="detail-image">
+        {% else %}
+          <img src="{% static 'img/placeholder_product.png' %}" alt="{{ product.name }}" class="detail-image">
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <h2 class="detail-title">{{ product.name }}</h2>
+      <div class="detail-seller">Sold by {{ product.vendor.shop_name }}</div>
+
+      <!-- DESCRIPTION COLOUR FIX -->
+      <p class="detail-description">
+        {{ product.description }}
+      </p>
+
+      <div class="detail-price">₹{{ product.price }}</div>
+
+      <form method="post" class="detail-form">
+        {% csrf_token %}
+        <label class="form-label text-light">Quantity:</label>
+        <input type="number"
+               name="quantity"
+               value="1"
+               min="1"
+               class="form-control qty-input">
+
+        {% if user.is_authenticated %}
+          <button class="btn btn-success btn-lg mt-3" type="submit">
+            Add to Cart
+          </button>
+        {% else %}
+          <a class="btn btn-primary btn-lg mt-3"
+             href="{% url 'login' %}?next={{ request.path }}">
+            Login to order
+          </a>
+        {% endif %}
+      </form>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

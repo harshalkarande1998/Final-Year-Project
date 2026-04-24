@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<div class="auth-shell">
+  <div class="auth-card row g-0">
+    <div class="col-md-5 auth-side d-flex flex-column justify-content-between">
+      <div>
+        <div class="auth-tag">
+          <span>⚡ Fast access</span>
+        </div>
+        <h2 class="auth-title">Welcome back to Instalocal</h2>
+        <p class="auth-sub">Track your orders, explore nearby vendors and reorder your favourites in seconds.</p>
+      </div>
+      <small>Tip: Use your registered username & password.</small>
+    </div>
+
+    <div class="col-md-7 auth-main">
+      <h2>Login</h2>
+      <p class="mb-3">Sign in to continue ordering from local stores.</p>
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger py-2">
+          {{ form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Username</label>
+          {{ form.username }}
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          {{ form.password }}
+        </div>
+        <button class="btn btn-pill-accent w-100 mb-2" type="submit">Login</button>
+        <div class="text-muted small mt-1">
+          New here? <a href="{% url 'register' %}">Create an account</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

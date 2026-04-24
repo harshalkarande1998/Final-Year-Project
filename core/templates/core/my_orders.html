@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<h3>My Orders</h3>
+
+{% for o in orders %}
+  <div class="card p-3 mb-3">
+    <strong>{{ o.product.name }}</strong> × {{ o.quantity }}
+    <div class="small-muted">Placed on {{ o.placed_at }}</div>
+    <div>Status: <strong>{{ o.get_status_display }}</strong></div>
+    <div>Deliver to: {{ o.full_name }}, {{ o.address_line }}, {{ o.city }} - {{ o.pincode }}</div>
+  </div>
+{% empty %}
+  <p>No orders yet.</p>
+{% endfor %}
+
+{% endblock %}
