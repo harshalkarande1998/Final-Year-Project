@@ -1,0 +1,30 @@
+.admin-container {
+  @apply max-w-7xl mx-auto px-6 py-12 min-h-[calc(100vh-80px)];
+}
+
+.admin-header {
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  padding: 2rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+}
+
+.metric-card h3 {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.metric-card p {
+  font-weight: 900;
+  font-size: 3rem;
+  line-height: 1;
+}

@@ -1,0 +1,178 @@
+.track-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.track-card {
+  background: white;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+  border: 1px border-[#f1f1f6];
+}
+
+/* Progress Stepper */
+.stepper {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px;
+  background: #fafafb;
+  border-bottom: 1px solid #f1f1f6;
+  position: relative;
+}
+
+.stepper::before {
+  content: '';
+  position: absolute;
+  top: 58px;
+  left: 60px;
+  right: 60px;
+  height: 4px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.step {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  items: center;
+  gap: 12px;
+  width: 100px;
+  text-align: center;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: 4px solid #e2e8f0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.step.active .step-icon {
+  border-color: #60b246;
+  background: #60b246;
+  color: white;
+  box-shadow: 0 0 20px rgba(96, 178, 70, 0.3);
+}
+
+.step.completed .step-icon {
+  border-color: #60b246;
+  background: #60b246;
+  color: white;
+}
+
+.step-label {
+  font-size: 11px;
+  font-weight: 900;
+  color: #93959f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.step.active .step-label {
+  color: #282c3f;
+}
+
+/* Map Simulation */
+.map-simulation {
+  height: 350px;
+  background: #e5e7eb;
+  position: relative;
+  overflow: hidden;
+  background-image: 
+    radial-gradient(#d1d5db 2px, transparent 2px),
+    linear-gradient(#d1d5db 1px, transparent 1px),
+    linear-gradient(90deg, #d1d5db 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.route-path {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 6px;
+  background: rgba(0,0,0,0.05);
+  border-radius: 10px;
+}
+
+.delivery-boy {
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  transition: all 2s ease;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, -60%); }
+  50% { transform: translate(-50%, -40%); }
+}
+
+.pulse-dot {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #fc8019;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(252, 128, 25, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(252, 128, 25, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(252, 128, 25, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(252, 128, 25, 0); }
+}
+
+.tracking-info {
+  padding: 40px;
+}
+
+.status-badge {
+  display: inline-block;
+  background: #60b246;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.track-footer {
+  background: #282c3f;
+  color: white;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.valet-card {
+  display: flex;
+  items-center: center;
+  gap: 15px;
+}
+
+.valet-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+  background: #3e4152;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

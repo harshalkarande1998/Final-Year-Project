@@ -1,0 +1,390 @@
+.menu-page-wrapper {
+  min-height: 100vh;
+  background-color: white;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #02060c;
+}
+
+.food-nav {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  box-shadow: 0 15px 40px -20px rgba(40,44,63,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.nav-brand {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0f172a;
+  text-decoration: none;
+  max-width: 800px;
+  width: 100%;
+}
+
+.menu-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+.breadcrumb-container {
+  margin-bottom: 2rem;
+  font-size: 10px;
+  color: #93959f;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.back-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.current-page {
+  color: #282c3f;
+  font-weight: 700;
+}
+
+.restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 2rem;
+}
+
+.restaurant-header-info {
+  flex: 1;
+}
+
+.restaurant-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #282c3f;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.restaurant-tags {
+  font-size: 13px;
+  color: #7e808c;
+  margin-bottom: 4px;
+}
+
+.restaurant-address {
+  font-size: 13px;
+  color: #7e808c;
+  margin-bottom: 16px;
+}
+
+.restaurant-meta-pills {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #3e4152;
+}
+
+.rating-pill {
+  color: #1e293b;
+}
+
+.star-icon {
+  width: 18px;
+  height: 18px;
+  color: #16a34a;
+}
+
+.restaurant-header-image {
+  position: relative;
+  width: 180px;
+  height: 120px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  flex-shrink: 0;
+}
+
+.divider-line {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, #d3d3d3 33%, rgba(255,255,255,0) 0%);
+  background-position: bottom;
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+  margin: 1.5rem 0;
+}
+
+.divider-line-thick {
+  border: 0;
+  height: 16px;
+  background-color: #f1f1f6;
+  margin: 2rem -2rem; /* Extend past padding */
+}
+
+.offers-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+
+.offers-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.offer-card {
+  border: 1px solid #e9e9eb;
+  border-radius: 12px;
+  padding: 12px 16px;
+  min-width: 220px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.offer-title {
+  font-weight: 800;
+  font-size: 14px;
+  color: #686b78;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.offer-title::before {
+  content: '🏷️';
+  font-size: 12px;
+}
+
+.offer-desc {
+  font-size: 12px;
+  color: #93959f;
+  font-weight: 700;
+}
+
+/* Menu Items Section */
+
+.menu-category-group {
+  margin-bottom: 40px;
+}
+
+.category-heading {
+  font-size: 20px;
+  font-weight: 800;
+  color: #3e4152;
+  margin-bottom: 24px;
+}
+
+.menu-items-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item-row {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 32px;
+  margin-bottom: 32px;
+  border-bottom: 0.5px solid #d3d3d3;
+}
+
+.menu-item-row:last-child {
+  border-bottom: none;
+}
+
+.item-info {
+  flex: 1;
+  padding-right: 40px;
+}
+
+.veg-badge {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #0f8a65;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.veg-badge::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: #0f8a65;
+  border-radius: 50%;
+}
+
+.veg-badge.non-veg {
+  border-color: #bd3a3a;
+}
+
+.veg-badge.non-veg::after {
+  background: #bd3a3a;
+}
+
+.item-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #3e4152;
+  margin-bottom: 4px;
+}
+
+.item-price {
+  font-size: 16px;
+  font-weight: 600;
+  color: #3e4152;
+  margin-bottom: 12px;
+}
+
+.item-desc {
+  font-size: 14px;
+  color: #282c3f;
+  line-height: 1.3;
+  opacity: 0.6;
+}
+
+.item-img-optimized {
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.item-image-wrapper:hover .item-img-optimized {
+  transform: scale(1.05);
+}
+
+.item-action {
+  width: 156px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-image-wrapper {
+  position: relative;
+  width: 156px;
+  height: 144px;
+  border-radius: 16px;
+  background-color: #fceceb; /* Soft placeholder bg */
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+}
+
+.item-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.add-btn-wrapper {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  z-index: 20;
+}
+
+.add-btn-wrapper .add-to-cart-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.add-btn-wrapper .btn-primary {
+  background: white;
+  color: #1ba672;
+  border: 1px solid #d4d5d9;
+  padding: 10px 0;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 16px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+}
+
+.add-btn-wrapper .btn-primary:hover {
+  background: #f1f1f6;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.swiggy-counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  color: #1ba672;
+  border: 1px solid #d4d5d9;
+  border-radius: 8px;
+  font-weight: 800;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+  overflow: hidden;
+  width: 100%;
+  height: 44px;
+}
+
+.counter-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  color: #1ba672;
+  height: 100%;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.counter-btn:hover {
+  background: #f1f1f6;
+}
+
+.counter-val {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: #1ba672;
+  font-weight: 800;
+}
+
+/* Hide Swiggy's default cart icon inside the button */
+.add-btn-wrapper svg {
+  display: none;
+}
+
+.empty-menu {
+  text-align: center;
+  padding: 60px 20px;
+  color: #93959f;
+  font-size: 16px;
+  background: #f1f1f6;
+  border-radius: 16px;
+}
