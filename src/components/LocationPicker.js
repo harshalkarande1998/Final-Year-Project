@@ -13,6 +13,24 @@ export default function LocationPicker() {
   })
   const [loading, setLoading] = useState(false)
   const [search, setSearch] = useState('')
+  const [suggestions, setSuggestions] = useState([])
+
+  useEffect(() => {
+    if (search.trim().length > 2) {
+      const timer = setTimeout(async () => {
+        try {
+          const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(search)}&addressdetails=1&limit=5&countrycodes=in`)
+          const data = await res.json()
+          setSuggestions(data || [])
+        } catch (error) {
+          console.error('Search failed:', error)
+        }
+      }, 500)
+      return () => clearTimeout(timer)
+    } else {
+      setSuggestions([])
+    }
+  }, [search])
 
   useEffect(() => {
     // This effect is now just for hydration safety if needed, 
@@ -30,19 +48,48 @@ export default function LocationPicker() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
-          // In a real app, you'd use a reverse geocoding API like Google Maps or OpenStreetMap
-          // For this project, we'll simulate a local address based on the success
-          setTimeout(() => {
-            updateLocation('New Sangavi, Pune, Maharashtra')
+          const { latitude, longitude } = position.coords
+          try {
+            // Using OpenStreetMap's Nominatim API for free reverse geocoding
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`,
+              {
+                headers: {
+                  'Accept-Language': 'en'
+                }
+              }
+            )
+            const data = await response.json()
+            
+            if (data && data.display_name) {
+              // Clean up the display name a bit (remove zip codes or country if too long)
+              const parts = data.display_name.split(', ')
+              const simplified = parts.slice(0, 4).join(', ')
+              updateLocation(simplified)
+            } else {
+              updateLocation(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`)
+            }
+          } catch (error) {
+            console.error('Reverse geocoding failed:', error)
+            updateLocation(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`)
+          } finally {
             setLoading(false)
-          }, 1500)
+          }
         },
         (error) => {
           console.error(error)
           setLoading(false)
-          alert('Location access denied. Please select manually.')
-        }
+          let msg = 'Location access denied.'
+          if (error.code === 1) msg = 'Location access denied by user.'
+          else if (error.code === 2) msg = 'Location unavailable.'
+          else if (error.code === 3) msg = 'Location request timed out.'
+          alert(`${msg} Please select manually.`)
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
       )
+    } else {
+      setLoading(false)
+      alert('Geolocation is not supported by your browser.')
     }
   }
 
@@ -85,79 +132,54 @@ export default function LocationPicker() {
             onClick={() => setIsOpen(false)}
           />
           <div className="fixed top-0 left-0 h-full w-full max-w-[480px] bg-white z-[101] shadow-2xl animate-slide-right overflow-y-auto">
-            <div className="p-10">
-              <div className="flex justify-between items-center mb-10">
+            <div className="p-6 md:p-10">
+              <div className="flex justify-between items-center mb-8 md:mb-10">
                 <button onClick={() => setIsOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 text-[#3d4152] transition-colors">
                   <X size={24} />
                 </button>
               </div>
 
-              <div className="relative mb-10">
+              <div className="relative mb-8 md:mb-10">
                 <form onSubmit={handleSearch}>
                   <input 
                     type="text" 
                     placeholder="Search for area, street name.." 
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full h-16 pl-14 pr-6 border border-[#d4d5d9] focus:border-swiggy-orange focus:shadow-[0_8px_30px_rgba(252,128,25,0.1)] outline-none font-bold text-lg transition-all rounded-lg"
+                    className="w-full h-14 md:h-16 pl-14 pr-6 border border-[#d4d5d9] focus:border-swiggy-orange focus:shadow-[0_8px_30px_rgba(252,128,25,0.1)] outline-none font-bold text-base md:text-lg transition-all rounded-lg"
                   />
                   <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#686b78]" size={24} />
                 </form>
 
                 {/* Live Search Suggestions */}
-                {search.length > 0 && (
-                  <div className="absolute top-full left-0 right-0 bg-white shadow-2xl z-[102] border border-[#d4d5d9] rounded-b-lg mt-1 max-h-[300px] overflow-y-auto animate-fade-in">
-                    {[
-                      'New Sangavi, Pune',
-                      'Old Sangavi, Pune',
-                      'Kothrud, Pune',
-                      'Hinjewadi, Pune',
-                      'Baner, Pune',
-                      'Aundh, Pune',
-                      'Wakad, Pune',
-                      'Pimple Saudagar, Pune',
-                      'Viman Nagar, Pune',
-                      'Shivaji Nagar, Pune',
-                      'Deccan Gymkhana, Pune',
-                      'Kalyani Nagar, Pune',
-                      'Hadapsar, Pune',
-                      'Magarpatta City, Pune'
-                    ].filter(item => item.toLowerCase().includes(search.toLowerCase()))
-                     .map((item, i) => (
+                {suggestions.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 bg-white shadow-2xl z-[102] border border-[#d4d5d9] rounded-b-lg mt-1 max-h-[400px] overflow-y-auto animate-fade-in">
+                    {suggestions.map((item, i) => (
                       <div 
                         key={i} 
-                        onClick={() => updateLocation(item + ', Maharashtra')}
-                        className="p-4 hover:bg-orange-50 cursor-pointer flex items-center gap-4 border-b border-gray-50 last:border-0 group transition-colors"
+                        onClick={() => updateLocation(item.display_name)}
+                        className="p-5 hover:bg-orange-50 cursor-pointer flex items-center gap-4 border-b border-gray-50 last:border-0 group transition-all"
                       >
-                        <MapPin size={18} className="text-[#93959f] group-hover:text-swiggy-orange" />
-                        <span className="font-bold text-[#3d4152] group-hover:text-black">{item}</span>
+                        <div className="bg-gray-100 p-2 rounded-lg group-hover:bg-swiggy-orange/10 transition-colors shrink-0">
+                          <MapPin size={20} className="text-[#93959f] group-hover:text-swiggy-orange" />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="font-black text-[#3d4152] group-hover:text-black leading-tight">
+                            {item.display_name.split(',')[0]}
+                          </span>
+                          <span className="text-[11px] font-bold text-[#93959f] line-clamp-1 mt-0.5">
+                            {item.display_name.split(',').slice(1).join(',')}
+                          </span>
+                        </div>
                       </div>
                     ))}
-                    {search.length > 0 && [
-                      'New Sangavi, Pune',
-                      'Old Sangavi, Pune',
-                      'Kothrud, Pune',
-                      'Hinjewadi, Pune',
-                      'Baner, Pune',
-                      'Aundh, Pune',
-                      'Wakad, Pune',
-                      'Pimple Saudagar, Pune',
-                      'Viman Nagar, Pune',
-                      'Shivaji Nagar, Pune',
-                      'Deccan Gymkhana, Pune',
-                      'Kalyani Nagar, Pune',
-                      'Hadapsar, Pune',
-                      'Magarpatta City, Pune'
-                    ].filter(item => item.toLowerCase().includes(search.toLowerCase())).length === 0 && (
-                      <div 
-                        onClick={() => updateLocation(search)}
-                        className="p-6 text-center cursor-pointer hover:bg-gray-50"
-                      >
-                        <p className="text-sm font-bold text-swiggy-orange">Use &quot;{search}&quot;</p>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Select this custom location</p>
-                      </div>
-                    )}
                   </div>
+                )}
+                
+                {search.length > 0 && suggestions.length === 0 && !loading && (
+                   <div className="absolute top-full left-0 right-0 bg-white shadow-2xl z-[102] border border-[#d4d5d9] rounded-b-lg mt-1 p-6 text-center">
+                     <p className="text-sm font-bold text-gray-400">Searching across India...</p>
+                   </div>
                 )}
               </div>
 

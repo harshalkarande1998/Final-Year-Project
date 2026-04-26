@@ -234,3 +234,60 @@
   border: 1px solid #fc8019;
   cursor: pointer;
 }
+@media (max-width: 900px) {
+  .dashboard-card {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-sidebar {
+    display: none;
+  }
+  
+  .orders-main {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .user-info h1 {
+    font-size: 1.5rem;
+  }
+  
+  .orders-content-wrapper {
+    padding: 0 10px 80px;
+  }
+  
+  .order-header-modern {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .order-status-info {
+    text-align: left;
+  }
+  
+  .delivered-status {
+    justify-content: flex-start;
+  }
+  
+  .order-body-modern {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .order-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .order-actions button {
+    width: 100%;
+  }
+}

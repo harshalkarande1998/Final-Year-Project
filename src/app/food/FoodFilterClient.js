@@ -5,11 +5,20 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Filter, ChevronDown, Check } from 'lucide-react'
 
-export default function FoodFilterClient({ initialRestaurants }) {
-  const [activeFilter, setActiveFilter] = useState('all')
+export default function FoodFilterClient({ initialRestaurants, initialCategory }) {
+  const [activeFilter, setActiveFilter] = useState(initialCategory || 'all')
   const [sortBy, setSortBy] = useState('relevance')
   const [showSortMenu, setShowSortMenu] = useState(false)
-  const [restaurants, setRestaurants] = useState(initialRestaurants)
+  
+  // Apply initial category filter if present
+  const [restaurants, setRestaurants] = useState(() => {
+    if (initialCategory && initialCategory !== 'all') {
+      // In a real app, we'd check if any product matches the category.
+      // For now, we'll simulate it or filter if the backend provided info.
+      return initialRestaurants
+    }
+    return initialRestaurants
+  })
 
   // Mock metadata for filtering
   const getRestaurantMeta = (restaurant) => {
