@@ -1,0 +1,204 @@
+.food-wrapper {
+  min-height: 100vh;
+  background-color: #0f172a;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: white;
+}
+
+.food-nav {
+  position: sticky;
+  top: 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 2rem;
+}
+
+.search-bar {
+  flex: 1;
+  max-width: 600px;
+  margin-left: 2rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1rem;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #f97316;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.food-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Categories Carousel */
+.food-categories-section h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.categories-carousel {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: none;
+}
+.categories-carousel::-webkit-scrollbar { display: none; }
+
+.category-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.cat-image-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.category-circle:hover .cat-image-wrapper {
+  transform: scale(1.05);
+}
+
+.cat-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.cat-name {
+  font-weight: 600;
+  color: #cbd5e1;
+  font-size: 1.1rem;
+}
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 3rem 0;
+}
+
+/* Restaurants Grid */
+.restaurants-section h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.restaurants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.5rem;
+}
+
+.restaurant-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+.restaurant-card:hover {
+  transform: scale(0.98);
+}
+
+.restaurant-image-wrapper {
+  position: relative;
+  height: 180px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.offer-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+  padding: 2rem 1rem 0.5rem;
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+
+.restaurant-info {
+  padding: 0 0.5rem;
+}
+
+.restaurant-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.restaurant-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.star-icon {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.restaurant-cuisines, .restaurant-location {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+  .food-nav { padding: 0 1rem; gap: 1rem; }
+  .search-bar { display: none; } /* Hide on mobile for simplicity */
+  .cat-image-wrapper { width: 90px; height: 90px; }
+  .category-circle { min-width: 90px; }
+}

@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  password      String?
+  role          String    @default("customer") // "customer" or "vendor"
+  createdAt     DateTime  @default(now())
+
+  vendorProfiles VendorProfile[]
+  cartItems     CartItem[]
+  orders        Order[]   @relation("CustomerOrders")
+}
+
+model VendorProfile {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shopName    String
+  storeType   String   @default("GROCERY") // "RESTAURANT" or "GROCERY"
+  address     String?
+  phone       String?
+  image       String?
+  products    Product[]
+  orders      Order[]  @relation("VendorOrders")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  order       Int       @default(0)
+  color       String?
+  image       String?
+  storeType   String    @default("GROCERY") // "RESTAURANT" or "GROCERY"
+  products    Product[]
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  vendorId    String
+  vendor      VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  categoryId  String?
+  category    Category?     @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  name        String
+  description String?
+  price       Float
+  image       String?
+  createdAt   DateTime  @default(now())
+  
+  cartItems   CartItem[]
+  orders      Order[]
+}
+
+model CartItem {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity    Int      @default(1)
+  addedAt     DateTime @default(now())
+
+  @@unique([userId, productId])
+}
+
+model Order {
+  id            String    @id @default(cuid())
+  customerId    String
+  customer      User      @relation("CustomerOrders", fields: [customerId], references: [id], onDelete: Cascade)
+  productId     String
+  product       Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  vendorId      String?
+  vendor        VendorProfile? @relation("VendorOrders", fields: [vendorId], references: [id], onDelete: Cascade)
+  quantity      Int       @default(1)
+  status        String    @default("pending")
+  placedAt      DateTime  @default(now())
+
+  // Delivery Details
+  fullName      String?
+  phone         String?
+  addressLine   String?
+  city          String?
+  pincode       String?
+  notes         String?
+}

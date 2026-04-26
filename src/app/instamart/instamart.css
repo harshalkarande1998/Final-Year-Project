@@ -1,0 +1,59 @@
+.instamart-card {
+  transition: all 0.3s ease;
+}
+
+.instamart-card:hover {
+  transform: translateY(-4px);
+}
+
+.instamart-card .flex-row {
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Instamart Header Styling */
+.bg-gradient-to-r {
+  position: relative;
+  overflow: hidden;
+}
+
+.bg-gradient-to-r::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  transform: translate(150px, -150px);
+  pointer-events: none;
+}
+
+/* Sidebar Styling */
+aside .px-4 {
+  transition: all 0.2s ease;
+}
+
+aside a:hover .w-8 {
+  transform: scale(1.1);
+}
+
+/* Product Image Badge */
+.instamart-card .absolute {
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Shadow utilities for Instamart */
+.shadow-premium {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04), 0 4px 10px rgba(153, 34, 109, 0.05);
+}
+
+/* Custom scrollbar for sidebar if needed */
+aside::-webkit-scrollbar {
+  width: 4px;
+}
+
+aside::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
