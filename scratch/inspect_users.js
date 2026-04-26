@@ -1,0 +1,19 @@
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+
+async function main() {
+  const users = await prisma.user.findMany({
+    include: {
+      vendorProfiles: true
+    }
+  })
+
+  console.log('Total Users:', users.length)
+  users.forEach(u => {
+    console.log(`User: ${u.email} (Role: ${u.role}) -> Vendors: ${u.vendorProfiles.length}`)
+  })
+}
+
+main()
+  .catch(e => console.error(e))
+  .finally(async () => await prisma.$disconnect())

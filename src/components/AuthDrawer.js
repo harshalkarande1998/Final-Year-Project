@@ -126,11 +126,11 @@ export default function AuthDrawer({ isOpen, onClose, initialView = 'login' }) {
           <svg className="w-6 h-6 text-[#3d4152]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
 
-        <div className="px-10 pt-16 flex-1 flex flex-col">
+        <div className="px-6 md:px-10 pt-16 flex-1 flex flex-col">
           
-          <div className="flex justify-between items-start mb-10">
+          <div className="flex justify-between items-start mb-8 md:mb-10">
             <div>
-              <h2 className="text-4xl font-extrabold text-[#02060c] tracking-tight mb-2">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-[#02060c] tracking-tight mb-2">
                 {view === 'login' ? 'Login' : 'Sign up'}
               </h2>
               <p className="text-sm text-[#02060c99]">
@@ -261,7 +261,7 @@ export default function AuthDrawer({ isOpen, onClose, initialView = 'login' }) {
               type="submit" 
               disabled={loading} 
               style={{ backgroundColor: '#fc8019', color: '#ffffff' }}
-              className="w-full font-extrabold text-lg py-4 rounded-xl mt-4 transition-colors shadow-md disabled:opacity-70 tracking-wide"
+              className="w-full font-extrabold text-base md:text-lg py-4 rounded-xl mt-4 transition-colors shadow-md disabled:opacity-70 tracking-wide"
             >
               {loading ? 'PROCESSING...' : view === 'login' ? 'LOGIN TO YOUR ACCOUNT' : 'CONTINUE TO SIGN UP'}
             </button>
